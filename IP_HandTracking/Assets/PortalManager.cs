@@ -10,8 +10,8 @@ public class PortalManager : MonoBehaviour
 
     [Header("Spawn rate ramping (units per second)")]
     [SerializeField] private float spawnRateIncreasePerSecond = 200f; // how fast the rate ramps up while condition holds
-    [SerializeField] private float spawnRateDecreasePerSecond = 500f; // decrease speed (per second)
-    [SerializeField] private int maxSpawnRate = 4000; // Maximum spawn rate limit
+    [SerializeField] private float spawnRateDecreasePerSecond = 300f; // decrease speed (per second)
+    [SerializeField] private int maxSpawnRate = 5000; // Maximum spawn rate limit
 
     [Header("Portal open settings")]
     [SerializeField] private GameObject portalOpenObject; // object to activate when threshold reached

@@ -405,7 +405,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495206411}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: a18b7d6c504844936b49047b687b6cd4, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: a474ab2baca2f4be69bcd9f93d6a9449, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -650,9 +650,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalEffect: {fileID: 1275730123}
-  spawnRateIncreasePerSecond: 200
-  spawnRateDecreasePerSecond: 500
-  maxSpawnRate: 4000
+  spawnRateIncreasePerSecond: 250
+  spawnRateDecreasePerSecond: 300
+  maxSpawnRate: 5000
   portalOpenObject: {fileID: 495206411}
   openThreshold: 3500
   portalRadiusMax: 2

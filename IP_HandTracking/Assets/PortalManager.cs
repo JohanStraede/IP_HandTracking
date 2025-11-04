@@ -5,9 +5,15 @@ public class PortalManager : MonoBehaviour
 {
     [SerializeField] private VisualEffect portalEffect;
     private int currentSpawnRate = 0;
-    private int spawnRateIncrement = 50; // Amount to increase each press
+    [SerializeField] private int spawnRateIncrement = 100; // Amount to increase each press (increased a bit)
+    [SerializeField] private float spawnRateDecreasePerSecond = 500f; // decrease speed (per second)
     private int maxSpawnRate = 20000; // Maximum spawn rate limit
 
+    [Header("Portal open settings")]
+    [SerializeField] private GameObject portalOpenObject; // object to activate when threshold reached
+    [SerializeField] private int openThreshold = 3500; // threshold to open portal
+    private bool isPortalOpen = false;
+    
     void Start()
     {
         Debug.Log("PortalManager started on: " + gameObject.name);
@@ -36,16 +42,42 @@ public class PortalManager : MonoBehaviour
             Debug.Log("Found VFX on: " + portalEffect.gameObject.name);
             portalEffect.SetInt("Spawn rate", 0); // Changed from SetFloat to SetInt
         }
+
+        if (portalOpenObject != null)
+            portalOpenObject.SetActive(false); // ensure starts closed
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (portalEffect == null) return;
+
+        // Increase on key down (single tap increases once)
         if (Input.GetKeyDown(KeyCode.K))
         {
             currentSpawnRate = Mathf.Min(currentSpawnRate + spawnRateIncrement, maxSpawnRate);
-            portalEffect.SetInt("Spawn rate", currentSpawnRate);
-            Debug.Log($"Spawn rate increased to: {currentSpawnRate}");
+        }
+
+        // Only decrease while K is NOT held. Decrease amount is time-based for consistent behaviour.
+        if (!Input.GetKey(KeyCode.K))
+        {
+            int dec = Mathf.RoundToInt(spawnRateDecreasePerSecond * Time.deltaTime);
+            currentSpawnRate = Mathf.Max(currentSpawnRate - dec, 0);
+        }
+
+        portalEffect.SetInt("Spawn rate", currentSpawnRate);
+        Debug.Log($"Current spawn rate: {currentSpawnRate}");
+
+        // Open/close portal object based on threshold
+        if (!isPortalOpen && currentSpawnRate >= openThreshold)
+        {
+            if (portalOpenObject != null) portalOpenObject.SetActive(true);
+            isPortalOpen = true;
+        }
+        else if (isPortalOpen && currentSpawnRate < openThreshold)
+        {
+            if (portalOpenObject != null) portalOpenObject.SetActive(false);
+            isPortalOpen = false;
         }
     }
     

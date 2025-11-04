@@ -13,6 +13,11 @@ public class PortalManager : MonoBehaviour
     [SerializeField] private GameObject portalOpenObject; // object to activate when threshold reached
     [SerializeField] private int openThreshold = 3500; // threshold to open portal
     private bool isPortalOpen = false;
+
+    [Header("Radius settings")]
+    [SerializeField] private string radiusParameter = "Radius"; // VFX exposed float parameter name
+    [SerializeField] private float radiusMin = 0f;
+    [SerializeField] private float radiusMax = 2f;
     
     void Start()
     {
@@ -41,6 +46,8 @@ public class PortalManager : MonoBehaviour
         {
             Debug.Log("Found VFX on: " + portalEffect.gameObject.name);
             portalEffect.SetInt("Spawn rate", 0); // Changed from SetFloat to SetInt
+            // ensure radius starts at minimum
+            portalEffect.SetFloat(radiusParameter, radiusMin);
         }
 
         if (portalOpenObject != null)
@@ -67,6 +74,17 @@ public class PortalManager : MonoBehaviour
 
         portalEffect.SetInt("Spawn rate", currentSpawnRate);
         Debug.Log($"Current spawn rate: {currentSpawnRate}");
+
+        // map currentSpawnRate -> radius between radiusMin and radiusMax while below/at openThreshold
+        float t = Mathf.Clamp01(currentSpawnRate / (float)openThreshold);
+        float radius = Mathf.Lerp(radiusMin, radiusMax, t);
+        portalEffect.SetFloat(radiusParameter, radius);
+
+        // optionally scale the portalOpenObject to visualize radius (if assigned)
+        if (portalOpenObject != null)
+        {
+            portalOpenObject.transform.localScale = Vector3.one * radius;
+        }
 
         // Open/close portal object based on threshold
         if (!isPortalOpen && currentSpawnRate >= openThreshold)

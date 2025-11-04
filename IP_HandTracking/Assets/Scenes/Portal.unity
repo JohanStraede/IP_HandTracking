@@ -524,6 +524,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &698776973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 698776975}
+  - component: {fileID: 698776974}
+  m_Layer: 0
+  m_Name: oscListnerClient
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &698776974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698776973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d3a7d72bb2ba4f6ba248a486367bb6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  listenPort: 9000
+--- !u!4 &698776975
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 698776973}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,10 +650,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   portalEffect: {fileID: 1275730123}
-  spawnRateIncrement: 100
+  spawnRateIncreasePerSecond: 200
   spawnRateDecreasePerSecond: 500
+  maxSpawnRate: 4000
   portalOpenObject: {fileID: 495206411}
   openThreshold: 3500
+  portalRadiusMax: 2
+  portalRadiusSigmoidSteepness: 10
+  portalRadiusMin: 0.5
+  tangensSpeedMin: 2
+  tangensSpeedMax: 8
 --- !u!73398921 &1275730122
 VFXRenderer:
   serializedVersion: 1
@@ -669,7 +720,16 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array: []
+      m_Array:
+      - m_Value: 8
+        m_Name: Tangent speed
+        m_Overridden: 1
+      - m_Value: 2
+        m_Name: Portal radius
+        m_Overridden: 1
+      - m_Value: 0.34
+        m_Name: Particle Size
+        m_Overridden: 0
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -717,3 +777,4 @@ SceneRoots:
   - {fileID: 832575519}
   - {fileID: 1275730124}
   - {fileID: 495206416}
+  - {fileID: 698776975}
